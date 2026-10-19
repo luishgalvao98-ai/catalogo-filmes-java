@@ -18,6 +18,7 @@ public class Main {
             System.out.println();
             System.out.println("=== Menu ===");
             System.out.println("1 - Listar filmes");
+            System.out.println("2 - Adicionar filme");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opcao: ");
             opcao = teclado.nextInt();
@@ -28,6 +29,17 @@ public class Main {
                         filme.exibir();
                     }
                      break;
+                case 2:
+                    teclado.nextLine();
+                    System.out.println("Titulo: ");
+                    String titulo = teclado.nextLine();
+                    System.out.println("Ano: ");
+                    int ano = teclado.nextInt();
+                    System.out.print("Nota (use virgula, ex: 8,9): ");
+                    double nota = teclado.nextDouble();
+                    catalogo.add(new Filme(titulo, ano, nota));
+                    System.out.println("Filme adicionado!");
+                    break;
                 case 0:
                     System.out.println("Ate logo!");
                     break;
