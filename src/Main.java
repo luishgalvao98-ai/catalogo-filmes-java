@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -10,10 +11,31 @@ public class Main {
         catalogo.add(new Filme("Interestelar", 2014, 8.6));
         catalogo.add(new Filme("Parasita", 2019, 8.5));
 
-        System.out.println("=== Meu Catalogo ===");
+        Scanner teclado = new Scanner(System.in);
+        int opcao = -1;
 
-        for (Filme filme : catalogo) {
-            filme.exibir();
+        while (opcao != 0) {
+            System.out.println();
+            System.out.println("=== Menu ===");
+            System.out.println("1 - Listar filmes");
+            System.out.println("0 - Sair");
+            System.out.println("Escolha uma opcao: ");
+            opcao = teclado.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    for (Filme filme : catalogo) {
+                        filme.exibir();
+                    }
+                     break;
+                case 0:
+                    System.out.println("Ate logo!");
+                    break;
+                default:
+                    System.out.println("Opcao invalida");
+            }
         }
+        teclado.close();
     }
+
 }
