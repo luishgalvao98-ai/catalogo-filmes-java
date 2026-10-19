@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         ArrayList<Filme> catalogo = new ArrayList<>();
 
@@ -21,6 +20,7 @@ public class Main {
             System.out.println("1 - Listar filmes");
             System.out.println("2 - Adicionar filme");
             System.out.println("3 - Buscar por titulo");
+            System.out.println("4 - Listar por nota minima");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opcao: ");
             opcao = teclado.nextInt();
@@ -30,7 +30,7 @@ public class Main {
                     for (Filme filme : catalogo) {
                         filme.exibir();
                     }
-                     break;
+                    break;
                 case 2:
                     teclado.nextLine();
                     System.out.println("Titulo: ");
@@ -55,6 +55,20 @@ public class Main {
                     }
                     if (!achou) {
                         System.out.println("Nenhum filme encontrado.");
+                    }
+                    break;
+                case 4:
+                    System.out.print("Nota minima: ");
+                    double minima = teclado.nextDouble();
+                    boolean encontrou = false;
+                    for (Filme filme : catalogo) {
+                        if (filme.nota >= minima) {
+                            filme.exibir();
+                            encontrou = true;
+                        }
+                    }
+                    if (!encontrou) {
+                        System.out.println("Nenhum filme com essa nota.");
                     }
                     break;
                 case 0:
