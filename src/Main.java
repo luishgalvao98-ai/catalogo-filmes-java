@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -19,6 +20,7 @@ public class Main {
             System.out.println("=== Menu ===");
             System.out.println("1 - Listar filmes");
             System.out.println("2 - Adicionar filme");
+            System.out.println("3 - Buscar por titulo");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opcao: ");
             opcao = teclado.nextInt();
@@ -39,6 +41,21 @@ public class Main {
                     double nota = teclado.nextDouble();
                     catalogo.add(new Filme(titulo, ano, nota));
                     System.out.println("Filme adicionado!");
+                    break;
+                case 3:
+                    teclado.nextLine();
+                    System.out.print("Digite parte do titulo: ");
+                    String busca = teclado.nextLine();
+                    boolean achou = false;
+                    for (Filme filme : catalogo) {
+                        if (filme.titulo.toLowerCase().contains(busca.toLowerCase())) {
+                            filme.exibir();
+                            achou = true;
+                        }
+                    }
+                    if (!achou) {
+                        System.out.println("Nenhum filme encontrado.");
+                    }
                     break;
                 case 0:
                     System.out.println("Ate logo!");
