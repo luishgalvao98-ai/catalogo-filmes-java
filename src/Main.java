@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -72,6 +75,7 @@ public class Main {
                     }
                     break;
                 case 0:
+                    salvar(catalogo);
                     System.out.println("Ate logo!");
                     break;
                 default:
@@ -79,6 +83,20 @@ public class Main {
             }
         }
         teclado.close();
+    }
+
+    static void salvar(ArrayList<Filme> catalogo) {
+        ArrayList<String> linhas = new ArrayList<>();
+
+        for (Filme filme : catalogo) {
+            linhas.add(filme.titulo + filme.ano + ";" + filme.nota);
+        }
+        try {
+            Files.write(Path.of("filmes.txt"), linhas);
+            System.out.println("Filmes salvos em filmes.txt");
+        } catch (IOException e) {
+            System.out.println("Nao foi possivel salvar o arquivo.");
+        }
     }
 
 }
