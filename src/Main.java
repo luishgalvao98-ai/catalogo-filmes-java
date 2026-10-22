@@ -29,7 +29,7 @@ public class Main {
             System.out.println("4 - Listar por nota minima");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opcao: ");
-            opcao = teclado.nextInt();
+            opcao = lerInt(teclado);
 
             switch (opcao) {
                 case 1:
@@ -38,18 +38,16 @@ public class Main {
                     }
                     break;
                 case 2:
-                    teclado.nextLine();
                     System.out.println("Titulo: ");
                     String titulo = teclado.nextLine();
                     System.out.println("Ano: ");
-                    int ano = teclado.nextInt();
+                    int ano = lerInt(teclado);
                     System.out.print("Nota (use virgula, ex: 8,9): ");
-                    double nota = teclado.nextDouble();
+                    double nota = lerDouble(teclado);
                     catalogo.add(new Filme(titulo, ano, nota));
                     System.out.println("Filme adicionado!");
                     break;
                 case 3:
-                    teclado.nextLine();
                     System.out.print("Digite parte do titulo: ");
                     String busca = teclado.nextLine();
                     boolean achou = false;
@@ -65,7 +63,7 @@ public class Main {
                     break;
                 case 4:
                     System.out.print("Nota minima: ");
-                    double minima = teclado.nextDouble();
+                    double minima = lerDouble(teclado);
                     boolean encontrou = false;
                     for (Filme filme : catalogo) {
                         if (filme.nota >= minima) {
@@ -126,4 +124,25 @@ public class Main {
         return catalogo;
     }
 
+    static int lerInt(Scanner teclado) {
+        while (true) {
+            String texto = teclado.nextLine();
+            try {
+                return Integer.parseInt(texto.trim());
+            } catch (NumberFormatException e) {
+                System.out.print("Valor invalido. Digite um numero inteiro: ");
+            }
+        }
+    }
+
+    static double lerDouble(Scanner teclado) {
+        while (true) {
+            String texto = teclado.nextLine();
+            try {
+                return Double.parseDouble(texto.trim().replace(",", "."));
+            } catch (NumberFormatException e) {
+                System.out.print("Valor invalido. Digite um numero (ex: 8,9): ");
+            }
+        }
+    }
 }
