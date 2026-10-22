@@ -2,17 +2,20 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Filme> catalogo = new ArrayList<>();
+        ArrayList<Filme> catalogo = carregar();
 
-        catalogo.add(new Filme("Matrix", 1999, 8.7));
-        catalogo.add(new Filme("Interestelar", 2014, 8.6));
-        catalogo.add(new Filme("Parasita", 2019, 8.5));
+        if (catalogo.isEmpty()) {
+            catalogo.add(new Filme("Matrix", 1999, 8.7));
+            catalogo.add(new Filme("Interestelar", 2014, 8.6));
+            catalogo.add(new Filme("Parasita", 2019, 8.5));
+        }
 
         Scanner teclado = new Scanner(System.in);
         int opcao = -1;
@@ -89,14 +92,38 @@ public class Main {
         ArrayList<String> linhas = new ArrayList<>();
 
         for (Filme filme : catalogo) {
-            linhas.add(filme.titulo + filme.ano + ";" + filme.nota);
+            linhas.add(filme.titulo + ";" + filme.ano + ";" + filme.nota);
         }
+
         try {
             Files.write(Path.of("filmes.txt"), linhas);
             System.out.println("Filmes salvos em filmes.txt");
         } catch (IOException e) {
             System.out.println("Nao foi possivel salvar o arquivo.");
         }
+    }
+
+    static ArrayList<Filme> carregar() {
+        ArrayList<Filme> catalogo = new ArrayList<>();
+        Path arquivo = Path.of("filmes.txt");
+
+        if (Files.exists(arquivo)) {
+            try {
+                List<String> linhas = Files.readAllLines(arquivo);
+
+                for (String linha : linhas) {
+                    String[] partes = linha.split(";");
+                    String titulo = partes[0];
+                    int ano = Integer.parseInt(partes[1]);
+                    double nota = Double.parseDouble(partes[2]);
+                    catalogo.add(new Filme(titulo, ano, nota));
+                }
+            } catch (IOException e) {
+                System.out.println("Nao foi possivel ler o arquivo.");
+            }
+        }
+
+        return catalogo;
     }
 
 }
