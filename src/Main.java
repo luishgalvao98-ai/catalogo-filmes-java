@@ -111,6 +111,11 @@ public class Main {
 
                 for (String linha : linhas) {
                     String[] partes = linha.split(";");
+
+                    if (partes.length < 3) {
+                        continue;
+                    }
+
                     String titulo = partes[0];
                     int ano = Integer.parseInt(partes[1]);
                     double nota = Double.parseDouble(partes[2]);
@@ -145,4 +150,5 @@ public class Main {
             }
         }
     }
+
 }
