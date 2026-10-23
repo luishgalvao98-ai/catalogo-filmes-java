@@ -1,3 +1,8 @@
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -7,10 +12,11 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 public class TmdbApi {
 
-    static String buscarFilmes(String titulo) {
+    static String buscarJson(String titulo) {
         try {
             String chave = Files.readString(Path.of("chave.txt")).trim();
             String busca = URLEncoder.encode(titulo, StandardCharsets.UTF_8);
@@ -29,7 +35,43 @@ public class TmdbApi {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(buscarFilmes("matrix"));
+    static ArrayList<Filme> buscarFilmes(String titulo) {
+        ArrayList<Filme> lista = new ArrayList<>();
+        String json = buscarJson(titulo);
+
+        try {
+            JsonObject resposta = JsonParser.parseString(json).getAsJsonObject();
+            JsonArray resultados = resposta.getAsJsonArray("results");
+
+            for (JsonElement elemento : resultados) {
+                JsonObject filme = elemento.getAsJsonObject();
+
+                String nome = filme.get("title").getAsString();
+                double nota = filme.get("vote_average").getAsDouble();
+
+                JsonElement dataJson = filme.get("release_date");
+                if (dataJson == null || dataJson.isJsonNull()) {
+                    continue;
+                }
+                String data = dataJson.getAsString();
+                if (data.length() < 4) {
+                    continue;
+                }
+
+                int ano = Integer.parseInt(data.substring(0, 4));
+                lista.add(new Filme(nome, ano, nota));
+            }
+        } catch (RuntimeException e) {
+            System.out.println("Nao foi possivel ler a resposta da API.");
+        }
+
+        return lista;
     }
+
+    public static void main(String[] args) {
+        for (Filme filme : buscarFilmes("matrix")) {
+            filme.exibir();
+        }
+    }
+
 }
