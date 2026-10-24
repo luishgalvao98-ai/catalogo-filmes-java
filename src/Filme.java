@@ -3,6 +3,7 @@ public class Filme {
     String titulo;
     int ano;
     double nota;
+    boolean favorito;
 
     public Filme(String titulo, int ano, double nota) {
         this.titulo = titulo;
@@ -11,6 +12,10 @@ public class Filme {
     }
 
     public void exibir() {
-        System.out.println(titulo + " (" + ano + ") - Nota: " + String.format("%.1f", nota));
+        String marca = "";
+        if (favorito) {
+            marca = " [FAVORITO] ";
+        }
+        System.out.println(titulo + " (" + ano + ") - Nota: " + String.format("%.1f", nota) + marca);
     }
 }

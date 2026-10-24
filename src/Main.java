@@ -28,6 +28,7 @@ public class Main {
             System.out.println("3 - Buscar por titulo");
             System.out.println("4 - Listar por nota minima");
             System.out.println("5 - Buscar na internet");
+            System.out.println("6 - Marcar/desmarcar favorito");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opcao: ");
             opcao = lerInt(teclado);
@@ -85,19 +86,43 @@ public class Main {
                         System.out.println("Nenhum resultado na internet.");
                         break;
                     }
+
                     int limite = Math.min(5, resultados.size());
-                    for (int i = 0; i <limite; i++) {
+                    for (int i = 0; i < limite; i++) {
                         System.out.print((i + 1) + " - ");
                         resultados.get(i).exibir();
                     }
+
                     System.out.print("Numero do filme para adicionar (0 para cancelar): ");
                     int escolha = lerInt(teclado);
 
                     if (escolha >= 1 && escolha <= limite) {
                         catalogo.add(resultados.get(escolha - 1));
                         System.out.println("Filme adicionado!");
-                    }else {
+                    } else {
                         System.out.println("Nada foi adicionado.");
+                    }
+                    break;
+                case 6:
+                    for (int i = 0; i < catalogo.size(); i++) {
+                        System.out.print((i + 1) + " - ");
+                        catalogo.get(i).exibir();
+                    }
+
+                    System.out.print("Numero do filme (0 para cancelar): ");
+                    int numero = lerInt(teclado);
+
+                    if (numero >= 1 && numero <= catalogo.size()) {
+                        Filme escolhido = catalogo.get(numero - 1);
+                        escolhido.favorito = !escolhido.favorito;
+
+                        if (escolhido.favorito) {
+                            System.out.println("Marcado como favorito!");
+                        } else {
+                            System.out.println("Removido dos favoritos.");
+                        }
+                    } else {
+                        System.out.println("Nada foi alterado.");
                     }
                     break;
                 case 0:
