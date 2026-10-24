@@ -11,6 +11,6 @@ public class Filme {
     }
 
     public void exibir() {
-        System.out.println(titulo + " (" + ano + ") - Nota: " + nota);
+        System.out.println(titulo + " (" + ano + ") - Nota: " + String.format("%.1f", nota));
     }
 }
