@@ -27,6 +27,7 @@ public class Main {
             System.out.println("2 - Adicionar filme");
             System.out.println("3 - Buscar por titulo");
             System.out.println("4 - Listar por nota minima");
+            System.out.println("5 - Buscar na internet");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opcao: ");
             opcao = lerInt(teclado);
@@ -73,6 +74,30 @@ public class Main {
                     }
                     if (!encontrou) {
                         System.out.println("Nenhum filme com essa nota.");
+                    }
+                    break;
+                case 5:
+                    System.out.print("Nome do filme para buscar na internet: ");
+                    String termo = teclado.nextLine();
+                    ArrayList<Filme> resultados = TmdbApi.buscarFilmes(termo);
+
+                    if (resultados.isEmpty()) {
+                        System.out.println("Nenhum resultado na internet.");
+                        break;
+                    }
+                    int limite = Math.min(5, resultados.size());
+                    for (int i = 0; i <limite; i++) {
+                        System.out.print((i + 1) + " - ");
+                        resultados.get(i).exibir();
+                    }
+                    System.out.print("Numero do filme para adicionar (0 para cancelar): ");
+                    int escolha = lerInt(teclado);
+
+                    if (escolha >= 1 && escolha <= limite) {
+                        catalogo.add(resultados.get(escolha - 1));
+                        System.out.println("Filme adicionado!");
+                    }else {
+                        System.out.println("Nada foi adicionado.");
                     }
                     break;
                 case 0:
