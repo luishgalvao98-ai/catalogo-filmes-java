@@ -9,6 +9,7 @@ Programa de console para gerenciar um catálogo de filmes, feito em Java como pr
 - Busca filmes do catálogo por parte do título
 - Filtra filmes por nota mínima
 - Busca filmes na internet (API do TMDB) e adiciona ao catálogo
+- Marca filmes como favoritos e lista só os favoritos (salvos no arquivo)
 - Salva os filmes no arquivo `filmes.txt` ao sair e carrega ao iniciar
 - Valida a digitação: se for digitada uma letra onde se espera um número, o programa avisa e pergunta de novo
 
@@ -21,6 +22,8 @@ Programa de console para gerenciar um catálogo de filmes, feito em Java como pr
 3 - Buscar por titulo
 4 - Listar por nota minima
 5 - Buscar na internet
+6 - Marcar/desmarcar favorito
+7 - Listar favoritos
 0 - Sair
 ```
 
@@ -48,6 +51,6 @@ Este produto usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.
 ## Próximos passos
 
 - [x] Buscar filmes reais pela API do TMDB
-- [ ] Lista de favoritos
-- [ ] Arredondar as notas para uma casa decimal
+- [x] Lista de favoritos
+- [x] Arredondar as notas para uma casa decimal
 - [ ] Versão web com Spring Boot
