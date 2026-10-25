@@ -29,6 +29,7 @@ public class Main {
             System.out.println("4 - Listar por nota minima");
             System.out.println("5 - Buscar na internet");
             System.out.println("6 - Marcar/desmarcar favorito");
+            System.out.println("7 - Listar favoritos");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opcao: ");
             opcao = lerInt(teclado);
@@ -125,6 +126,18 @@ public class Main {
                         System.out.println("Nada foi alterado.");
                     }
                     break;
+                case 7:
+                    boolean temFavorito = false;
+                    for (Filme filme : catalogo) {
+                        if (filme.favorito) {
+                            filme.exibir();
+                            temFavorito = true;
+                        }
+                    }
+                    if (!temFavorito) {
+                        System.out.println("Nenhum favorito ainda.");
+                    }
+                    break;
                 case 0:
                     salvar(catalogo);
                     System.out.println("Ate logo!");
@@ -140,7 +153,7 @@ public class Main {
         ArrayList<String> linhas = new ArrayList<>();
 
         for (Filme filme : catalogo) {
-            linhas.add(filme.titulo + ";" + filme.ano + ";" + filme.nota);
+            linhas.add(filme.titulo + ";" + filme.ano + ";" + filme.nota + ";" + filme.favorito);
         }
 
         try {
@@ -169,7 +182,11 @@ public class Main {
                     String titulo = partes[0];
                     int ano = Integer.parseInt(partes[1]);
                     double nota = Double.parseDouble(partes[2]);
-                    catalogo.add(new Filme(titulo, ano, nota));
+                    Filme filme = new Filme(titulo, ano, nota);
+                    if (partes.length >= 4) {
+                        filme.favorito = Boolean.parseBoolean(partes[3]);
+                    }
+                    catalogo.add(filme);
                 }
             } catch (IOException e) {
                 System.out.println("Nao foi possivel ler o arquivo.");
